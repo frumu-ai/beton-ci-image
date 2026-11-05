@@ -23,6 +23,8 @@ jobs:
         run: |
           echo "image=$(cat VERSION)" >> "$GITHUB_OUTPUT"
           echo "sdk=$(cat DOTNET_SDK_VERSION)" >> "$GITHUB_OUTPUT"
+          echo "vulkan=$(cat VULKAN_SDK_VERSION)" >> "$GITHUB_OUTPUT"
+          echo "vulkan-sha=$(cat VULKAN_SDK_SHA256)" >> "$GITHUB_OUTPUT"
 
       - uses: docker/login-action@v3
         with:
@@ -37,6 +39,8 @@ jobs:
           build-args: |
             IMAGE_VERSION=${{ steps.versions.outputs.image }}
             DOTNET_SDK_VERSION=${{ steps.versions.outputs.sdk }}
+            VULKAN_SDK_VERSION=${{ steps.versions.outputs.vulkan }}
+            VULKAN_SDK_SHA256=${{ steps.versions.outputs.vulkan-sha }}
           tags: |
             ghcr.io/frumu-ai/beton-ci-image:${{ steps.versions.outputs.image }}
             ghcr.io/frumu-ai/beton-ci-image:latest
